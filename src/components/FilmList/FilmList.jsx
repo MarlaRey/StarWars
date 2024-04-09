@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery, gql } from '@apollo/client';
 
 const GET_FILMS = gql`
@@ -13,17 +13,29 @@ const GET_FILMS = gql`
   }
 `;
 
-function FilmList({ openModal }) { // Modtag openModal som en prop
+function FilmList({ openModal }) {
   const { loading, error, data } = useQuery(GET_FILMS);
+  const [searchTerm, setSearchTerm] = useState('');
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
+  // Filtrér filmene baseret på søgetermen
+  const filteredFilms = data.allFilms.films.filter(film =>
+    film.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div>
       <h2>Star Wars Films</h2>
+      <input
+        type="text"
+        placeholder="Search for a film..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
       <ul>
-        {data.allFilms.films.map(film => (
+        {filteredFilms.map(film => (
           <li key={film.title}>
             <button onClick={() => openModal(film)}> {film.title} </button>
           </li>
