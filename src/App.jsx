@@ -1,5 +1,3 @@
-// App.jsx
-
 import React, { useState } from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import Modal from './components/Modal/Modal';
@@ -25,7 +23,7 @@ function App() {
 
   return (
     <ApolloProvider client={client}>
-      <div>
+      <div className="container">
         <FilmList openModal={openModal} /> {/* Send openModal-funktionen som en prop */}
         <Modal film={selectedFilm} closeModal={closeModal} />
         <Footer />

@@ -1,20 +1,21 @@
 import React from 'react';
+import './Modal.scss';
 
-const Modal = ({ film, closeModal }) => {
-  if (!film) {
-    return null; // Returnerer null, hvis filmobjektet ikke er defineret
-  }
+function Modal({ film, closeModal }) {
+  if (!film) return null;
 
   return (
-    <div className="modal">
-      <div className="modal-content">
-        <span className="close" onClick={closeModal}>&times;</span>
-        <h2>{film.title}</h2>
-        <p><strong>Director:</strong> {film.director}</p>
-        <p><strong>Release Date:</strong> {film.releaseDate}</p>
+    <div>
+      <div className="overlay" onClick={closeModal}></div> 
+      <div className="modal active" onClick={closeModal}> 
+        <div>
+          <h3>{film.title}</h3>
+          <p>Director: {film.director}</p>
+          <p>Release Date: {film.releaseDate}</p>
+        </div>
       </div>
     </div>
   );
-};
+}
 
 export default Modal;
